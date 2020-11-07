@@ -1,0 +1,22 @@
+oauthClient:
+  redirectUris:
+    - com.okta.example:/callback
+  postLogoutRedirectUris:
+    - com.okta.example:/callback
+  applicationType: native
+
+directions: |2+
+  Okta configuration written to: samples.config.js
+
+  Build this example using NPM:
+      npm ci
+  Create Android keystore:
+      keytool -genkey -v -keystore android/app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000
+  Setup iOS Cocoapods:
+      cd ios && pod install && cd ..
+  Start the Metro App Server:
+      npm start
+  Run Android:
+      npm run android
+  Run iOS:
+      npm run ios
