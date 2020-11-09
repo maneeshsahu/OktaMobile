@@ -79,7 +79,7 @@ Note: You will need to edit the `samples.config.js` and update the `resourceServ
 ...
   resourceServer: {
     messagesUrl:
-      'https://ABBA.execute-api.us-east-1.amazonaws.com/api/messages',
+      'https://ABBAA.execute-api.us-east-1.amazonaws.com/api/messages',
   },
 };
 
