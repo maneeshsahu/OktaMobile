@@ -17,6 +17,8 @@ cd OktaMobile
 
 OktaMobile requires the React Native CLI. See documentation for environment setup: https://reactnative.dev/docs/environment-setup
 
+You will need to setup Android Studio and an Android Virtual Device Emulator for Android Development. For iOS, you will need to install Xcode (MacOS only) and create an Apple iPhone Simulator.
+
 ### Install JS dependencies
 
 Install dependencies based on package.json
@@ -33,7 +35,13 @@ CocoaPods dependencies are needed for ios development
 cd ios && pod install && cd ..
 ```
 
-## Run sample
+### Generate Andorid Keystore for Development (Android)
+
+```bash
+keytool -genkey -v -keystore android/app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000
+```
+
+## Run OktaMobile
 
 ### Start Metro
 
@@ -59,6 +67,22 @@ Enter your credentials and tap the **Login** button. You can login with the same
 
 ![Custom Login Screen](/images/okta-mobile-login-screen.png)
 
-After you complete the login flow, you will be able to see the messages from the Resource Server (AWS API Gateway).
+After you complete the login flow, you will see your account information.
+
+![Account Profile Screen](/images/okta-mobile-profile-claims.png)
+
+If you click on the `message` icon in the AppBar, you will be able to see the messages from the Resource Server (AWS API Gateway).
+
+Note: You will need to edit the `samples.config.js` and update the `resourceServer.messagesUrl` to specify your API Gateway endpoint.
+
+```js
+...
+  resourceServer: {
+    messagesUrl:
+      'https://ABBA.execute-api.us-east-1.amazonaws.com/api/messages',
+  },
+};
+
+```
 
 ![Messages Screen](/images/okta-mobile-messages.png)
