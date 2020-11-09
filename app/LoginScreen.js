@@ -62,7 +62,7 @@ export default class LoginScreen extends React.Component {
             progress: false,
             error: '',
           },
-          () => navigation.navigate('Messages'),
+          () => navigation.navigate('Profile'),
         );
       })
       .catch((e) => {

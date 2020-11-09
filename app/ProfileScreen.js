@@ -11,15 +11,9 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  Button
-} from 'react-native';
-import { getAccessToken, getUser, clearTokens } from '@okta/okta-react-native';
+import {SafeAreaView, StyleSheet, Text, StatusBar, View} from 'react-native';
+import {getAccessToken, getUser, clearTokens} from '@okta/okta-react-native';
+import {List} from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Error from './components/Error';
 
@@ -31,7 +25,7 @@ export default class ProfileScreen extends React.Component {
       accessToken: null,
       user: null,
       progress: true,
-      error: ''
+      error: '',
     };
 
     this.logout = this.logout.bind(this);
@@ -40,32 +34,35 @@ export default class ProfileScreen extends React.Component {
 
   componentDidMount() {
     this.props.navigation.setOptions({
-      headerLeft: () => 
-        <Text onPress={this.logout} style={styles.logoutButton}>Logout</Text>
+      headerLeft: () => (
+        <Text onPress={this.logout} style={styles.logoutButton}>
+          Logout
+        </Text>
+      ),
     });
 
-    this.setState({ progress: true });
+    this.setState({progress: true});
     getUser()
-      .then(user => {
-        this.setState({ progress: false, user });
+      .then((user) => {
+        this.setState({progress: false, user});
       })
-      .catch(e => {
-        this.setState({ progress: false, error: e.message });
+      .catch((e) => {
+        this.setState({progress: false, error: e.message});
       });
   }
 
   getAccessToken() {
-    this.setState({ progress: false });
+    this.setState({progress: false});
     getAccessToken()
-      .then(token => {
+      .then((token) => {
         this.setState({
           progress: false,
-          accessToken: token.access_token
+          accessToken: token.access_token,
         });
       })
-      .catch(e => {
-        this.setState({ progress: false, error: e.message });
-      })
+      .catch((e) => {
+        this.setState({progress: false, error: e.message});
+      });
   }
 
   logout() {
@@ -73,13 +70,13 @@ export default class ProfileScreen extends React.Component {
       .then(() => {
         this.props.navigation.navigate('Login');
       })
-      .catch(e => {
-        this.setState({ error: e.message })
+      .catch((e) => {
+        this.setState({error: e.message});
       });
   }
 
   render() {
-    const { user, accessToken, error, progress } = this.state;
+    const {user, accessToken, error, progress} = this.state;
 
     return (
       <>
@@ -91,32 +88,16 @@ export default class ProfileScreen extends React.Component {
             textStyle={styles.spinnerTextStyle}
           />
           <Error error={error} />
-          { user && (
-            <View style={{ paddingLeft: 20, paddingTop: 20 }}>
-              <Text style={styles.titleHello}>Hello {user.name}</Text>
-              <View style={{ flexDirection: 'row' }}>
-                <Text>Name: </Text>
-                <Text>{user.name}</Text>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text>Locale: </Text>
-                <Text>{user.locale}</Text>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text>Zone Info: </Text>
-                <Text>{user.zoneinfo}</Text>
-              </View>
-            </View>
-          )}
-          <View style={{ flexDirection: 'column', marginTop: 20, paddingLeft: 20, width: 300 }}>
-            <Button style={{ marginTop:40 }} title="Get access token" onPress={this.getAccessToken} />
-            { accessToken &&
-              <View style={styles.tokenContainer}>
-                <Text style={styles.tokenTitle}>Access Token:</Text>
-                <Text style={{ marginTop: 20 }} numberOfLines={5}>{accessToken}</Text>
-              </View>
-            }
-          </View>
+          {user &&
+            Object.keys(user).map((property) => (
+              <List.Item
+                title={property}
+                description={user[property]}
+                left={(props) => (
+                  <List.Icon {...props} icon="account-key-outline" />
+                )}
+              />
+            ))}
         </SafeAreaView>
       </>
     );
@@ -138,7 +119,7 @@ const styles = StyleSheet.create({
   logoutButton: {
     paddingLeft: 10,
     fontSize: 16,
-    color: '#0066cc'
+    color: '#0066cc',
   },
   container: {
     flex: 1,
@@ -149,7 +130,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#0066cc',
-    paddingTop: 40
+    paddingTop: 40,
   },
   titleDetails: {
     fontSize: 15,
@@ -158,10 +139,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tokenContainer: {
-    marginTop: 20
+    marginTop: 20,
   },
   tokenTitle: {
     fontSize: 16,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
