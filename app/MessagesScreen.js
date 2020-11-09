@@ -97,11 +97,17 @@ export default class MessagesScreen extends React.Component {
     return (
       <>
         <Appbar.Header>
-          <Appbar.Action icon="back" onPress={() => this.logout()} />
           <Appbar.Content
             title="Messages"
             subtitle={configFile.resourceServer.messagesUrl}
           />
+          <Appbar.Action
+            icon="account"
+            onPress={() => {
+              this.props.navigation.navigate('Profile');
+            }}
+          />
+          <Appbar.Action icon="logout" onPress={() => this.logout()} />
         </Appbar.Header>
         <StatusBar barStyle="dark-content" />
         <ScrollView

@@ -13,7 +13,7 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text, StatusBar, View} from 'react-native';
 import {getAccessToken, getUser, clearTokens} from '@okta/okta-react-native';
-import {List} from 'react-native-paper';
+import {Appbar, List} from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Error from './components/Error';
 
@@ -80,7 +80,17 @@ export default class ProfileScreen extends React.Component {
 
     return (
       <>
-        <StatusBar barStyle="dark-content" />
+        <Appbar.Header>
+          <Appbar.Content title="Profile" subtitle="Claims" />
+          <Appbar.Action
+            icon="message"
+            onPress={() => {
+              this.props.navigation.navigate('Messages');
+            }}
+          />
+          <Appbar.Action icon="logout" onPress={() => this.logout()} />
+        </Appbar.Header>
+        {/* <StatusBar barStyle="dark-content" /> */}
         <SafeAreaView style={styles.container}>
           <Spinner
             visible={progress}
