@@ -62,7 +62,7 @@ export default class LoginScreen extends React.Component {
             progress: false,
             error: '',
           },
-          () => navigation.navigate('Shows'),
+          () => navigation.navigate('Messages'),
         );
       })
       .catch((e) => {
@@ -85,7 +85,7 @@ export default class LoginScreen extends React.Component {
               progress: false,
               error: '',
             },
-            () => navigation.navigate('Shows'),
+            () => navigation.navigate('Messages'),
           );
         }
       })
@@ -111,7 +111,7 @@ export default class LoginScreen extends React.Component {
           progress: false,
           error: '',
         },
-        () => navigation.navigate('Shows'),
+        () => navigation.navigate('Messages'),
       );
     });
     EventEmitter.addListener('signOutSuccess', function (e) {
@@ -212,7 +212,7 @@ export default class LoginScreen extends React.Component {
                   mode="contained"
                   testID="federatedLoginButton"
                   onPress={this.federatedLogin}>
-                  Login with Provider
+                  Sign in with Apple 
                 </Button>
               </View>
 

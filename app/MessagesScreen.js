@@ -36,54 +36,46 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {getAccessToken, getUser, clearTokens} from '@okta/okta-react-native';
+import configFile from '../samples.config';
+import {Header} from 'react-native/Libraries/NewAppScreen';
 
 export default class MessagesScreen extends React.Component {
   constructor(props) {
     super(props);
-    let messages = [
-      {
-        id: '24hrs',
-        name: '24 Hrs',
-        title: 'Save Our Town',
-      },
-      {
-        id: '911',
-        name: '911',
-      },
-      {
-        id: 'celebrity-watch-party',
-        name: 'Celebrity Watch Party',
-        title: 'The Party Has Begun',
-      },
-      {
-        id: 'family-guy',
-        name: 'Family Guy',
-        title: 'Go Big or Go Home',
-      },
-      {
-        id: 'prodigal-son',
-        name: 'Prodigal Son',
-        title: 'Like Father...',
-      },
-      {
-        id: 'simpsons',
-        name: 'Simpsons',
-        title: 'The Hateful Eight-Year Olds',
-      },
-      {
-        id: 'the-masked-singer',
-        name: 'The Masked Singer',
-        title: 'A Quarter Mask Crisis',
-      },
-    ];
 
     this.state = {
-      progress: false,
+      isLoading: true,
       error: '',
-      tvShows: tvShows,
+      messages: [],
     };
 
     this.logout = this.logout.bind(this);
+  }
+
+  componentDidMount() {
+    getAccessToken().then((accessToken) => {
+      console.log('Got access token', accessToken.access_token);
+      fetch(configFile.resourceServer.messagesUrl, {
+        method: 'get',
+        headers: new Headers({
+          Authorization: 'Bearer ' + accessToken.access_token,
+        }),
+      })
+        .then((response) => {
+          console.log(JSON.stringify(response));
+          return response.json();
+        })
+        .then((json) => {
+          this.setState({messages: json.messages});
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({error});
+        })
+        .finally(() => {
+          this.setState({isLoading: false});
+        });
+    });
   }
 
   getAsset(id) {
@@ -101,12 +93,15 @@ export default class MessagesScreen extends React.Component {
   }
 
   render() {
-    const {progress, error, messages} = this.state;
+    const {isLoading, error, messages} = this.state;
     return (
       <>
         <Appbar.Header>
-          <Appbar.Action icon="logout" onPress={() => this.logout()} />
-          <Appbar.Content title="Messages" subtitle="Resource Server" />
+          <Appbar.Action icon="back" onPress={() => this.logout()} />
+          <Appbar.Content
+            title="Messages"
+            subtitle={configFile.resourceServer.messagesUrl}
+          />
         </Appbar.Header>
         <StatusBar barStyle="dark-content" />
         <ScrollView
@@ -114,8 +109,7 @@ export default class MessagesScreen extends React.Component {
           contentContainerStyle={styles.content}>
           {messages.map((message, key) => (
             <Card style={styles.card}>
-              {/* <Card.Cover source={tvShow.image} resizeMode="stretch" /> */}
-              <Card.Title title={message.name} />
+              <Card.Title title={message.text} subtitle={message.date} />
             </Card>
           ))}
         </ScrollView>

@@ -15,8 +15,8 @@ directions: |2+
   Setup iOS Cocoapods:
       cd ios && pod install && cd ..
   Start the Metro App Server:
-      npm start
+      npx react-native start
   Run Android:
-      npm run android
+      npx react-native run-android
   Run iOS:
-      npm run ios
+      npx react-native run-ios

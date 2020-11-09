@@ -19,4 +19,7 @@ export default {
     scopes: ['openid', 'profile', 'offline_access'],
     requireHardwareBackedKeyStore: false,
   },
+  resourceServer: {
+    messagesUrl: 'http://localhost:3000/api/messages',
+  },
 };
