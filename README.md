@@ -1,6 +1,8 @@
 # Okta React Native with AWS Gateway Resource Server
 
-This example shows you how to use the [Okta React Native SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native) to adopt Okta Authentication flow in your app.
+This example shows you how to use the [Okta React Native SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native) to adopt Okta Authentication flow in your app and use it with a secure API, running in AWS API Gateway.
+
+The AWS API Gateway part is covered in https://github.com/maneeshsahu/aws-howdy-partner
 
 ## Clone repo
 
