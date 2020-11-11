@@ -11,6 +11,16 @@ git clone git@github.com:maneeshsahu/OktaMobile.git
 cd OktaMobile
 ```
 
+Setup the app in Okta using the Okta CLI
+
+```bash
+okta start
+```
+
+Once this completes, you should get a console output as in the screenshot below:
+
+![Okta CLI App Configuration](/images/okta-mobile-app-configuration.png)
+
 ## Install dependencies
 
 ### Setup Development Environment for ReactNative
